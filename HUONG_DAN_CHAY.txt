@@ -1,0 +1,56 @@
+==================================================
+HƯỚNG DẪN CÀI ĐẶT VÀ CHẠY FLOW KIT (WINDOWS)
+==================================================
+
+BƯỚC 1: CÀI ĐẶT FFMPEG
+--------------------------------------------------
+Mở PowerShell (Run as Administrator nếu cần) và chạy:
+winget install Gyan.FFmpeg
+
+(Khởi động lại Terminal sau khi cài xong)
+
+
+BƯỚC 2: TẠO VIRTUALENV VÀ CÀI ĐẶT DEPENDENCIES
+--------------------------------------------------
+Tại thư mục dự án (C:\Users\Admin\LapTrinh\AI_VIDEO), chạy:
+
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+
+
+BƯỚC 3: CÀI ĐẶT CHROME EXTENSION
+--------------------------------------------------
+1. Mở Chrome, truy cập: chrome://extensions/
+2. Bật công tắc "Developer mode" (góc trên bên phải).
+3. Bấm "Load unpacked" (Tải tiện ích đã giải nén).
+4. Chọn thư mục: C:\Users\Admin\LapTrinh\AI_VIDEO\extension
+
+
+BƯỚC 4: MỞ GOOGLE FLOW
+--------------------------------------------------
+1. Truy cập https://flow.google.com/ và đăng nhập tài khoản Google.
+2. Tạo 1 Project mới.
+3. Copy mã UUID của Project từ đường dẫn URL (dạng: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx).
+4. Luôn giữ tab này mở trong trình duyệt.
+
+
+BƯỚC 5: KHỞI ĐỘNG SERVER
+--------------------------------------------------
+Tại PowerShell (đã kích hoạt venv):
+
+$env:FLOW_PROJECT_ID="<DIEN_UUID_PROJECT_VAO_DAY>"
+python -m agent.main
+
+
+BƯỚC 6: KIỂM TRA TRẠNG THÁI
+--------------------------------------------------
+Mở một cửa sổ Terminal khác và chạy:
+
+curl http://127.0.0.1:8100/health
+
+Kết quả đạt chuẩn:
+{"status":"ok","extension_connected":true}
+==================================================
